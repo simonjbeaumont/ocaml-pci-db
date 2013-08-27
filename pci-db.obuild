@@ -1,0 +1,9 @@
+name: pci-db
+version: 0.1.0
+synopsis: Library to parse and query the pci.ids database of PCI devices.
+obuild-ver: 1
+
+library pci_db
+  src-dir: lib
+  modules: pci_db
+  build-deps: unix, stdext
