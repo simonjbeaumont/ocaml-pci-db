@@ -9,6 +9,15 @@ Build dependencies
 * [obuild](https://github.com/vincenthz/obuild)
 * [stdext](https://github.com/xapi-project/stdext)
 
+Installation
+------------
+This is intended to be an OPAM package but for now it can be insalled like
+this:
+```
+$ make
+$ make install
+```
+
 Usage
 -----
 
