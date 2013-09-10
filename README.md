@@ -41,7 +41,7 @@ $ ./trial
 The 'G72M [Quadro NVS 110M]' is a 'Display controller' and is made by 'NVIDIA Corporation'.
 ```
 
-It's also possible to use this library in the top-level using the following:
+It's also possible to use this library in scripts using the following:
 
 ```ocaml
 #!/path/to/ocaml
@@ -52,4 +52,5 @@ It's also possible to use this library in the top-level using the following:
 
 Todo
 ----
-- Remove dependency on stdext
+- Remove dependency on `stdext`
+- Use `ocamlyacc`/`ocamllex` for parsing
