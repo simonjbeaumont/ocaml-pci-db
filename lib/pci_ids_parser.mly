@@ -23,7 +23,7 @@ classes:
 
 class_def:
 	| CLASS_DELIM SPACE INT SPACE SPACE name_str
-		{ Printf.printf "Class: %Lx %s\n" $3 $6 }
+		{ Printf.printf "Class: %02Lx %s\n" $3 $6 }
 
 subclasses:
 	| /* empty */ { }
@@ -32,15 +32,16 @@ subclasses:
 
 subclass_def:
 	| TAB INT SPACE SPACE name_str
-		{ Printf.printf "Subclass: %Lx %s\n" $2 $5 }
+		{ Printf.printf "Subclass: %02Lx %s\n" $2 $5 }
 
 progif:
 	| progif_def NEWLINE { }
 
 progif_def:
 	| TAB TAB INT SPACE SPACE name_str
-		{ Printf.printf "Prog-if: %Lx %s\n" $3 $6 }
+		{ Printf.printf "Prog-if: %02Lx %s\n" $3 $6 }
 
 name_str:
-	| STRING SPACE name_str { Printf.sprintf "%s %s" $1 $3 }
+	| name_str SPACE name_str { Printf.sprintf "%s %s" $1 $3 }
 	| STRING { $1 }
+	| INT { Int64.to_string $1 }
