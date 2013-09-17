@@ -12,8 +12,6 @@
  * GNU Lesser General Public License for more details.
  *)
 
-open Stringext
-
 let pci_ids_path = "/usr/share/hwdata/pci.ids"
 
 type class_id = int64

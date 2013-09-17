@@ -6,4 +6,4 @@ obuild-ver: 1
 library pci_db
   src-dir: lib
   modules: pci_db
-  build-deps: unix, stdext
+  build-deps: unix
