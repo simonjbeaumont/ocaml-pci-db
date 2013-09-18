@@ -1,13 +1,10 @@
 let string_of_token = function
-	| Pci_ids_parser.CLASS_DELIM -> "CLASS_DELIM"
-	| Pci_ids_parser.INT x -> "INT"
-	| Pci_ids_parser.STRING x -> "STRING " ^ x
-	| Pci_ids_parser.SPACE -> "SPACE"
-	| Pci_ids_parser.TAB -> "TAB"
-	| Pci_ids_parser.COMMENT -> "COMMENT"
-	| Pci_ids_parser.NEWLINE -> "NEWLINE"
+	| Pci_ids_parser.CLASS x -> Printf.sprintf "CLASS: %02Lx %s" (fst x) (snd x)
+	| Pci_ids_parser.SUBCLASS x -> Printf.sprintf "\tSUBCLASS: %02Lx %s" (fst x) (snd x)
+	| Pci_ids_parser.PROGIF x -> Printf.sprintf "\t\tPROGIF: %02Lx %s" (fst x) (snd x)
 	| Pci_ids_parser.EOF -> "EOF"
 
+let string_of_foo x = Printf.sprintf "%02Lx %s" (fst x) (snd x)
 let main () =
 	let cin =
 	if Array.length Sys.argv > 1
