@@ -1,71 +1,61 @@
 %{
-let string_of_token = function
-	| CLASS (id, name) -> Printf.sprintf "%02Lx %s" id name
-	| SUBCLASS (id, name) -> Printf.sprintf "%02Lx %s" id name
-	| PROGIF (id, name) -> Printf.sprintf "%02Lx %s" id name
-	| VENDOR (id, name) -> Printf.sprintf "%02Lx %s" id name
-	| DEVICE (id, name) -> Printf.sprintf "%02Lx %s" id name
-	| SUBDEVICE ((sv_id, sd_id), name) -> Printf.sprintf "%04Lx %04Lx %s" sv_id sd_id name
-	| _ -> failwith "Use other printer"
-
-
+open Pci_db_types
 %}
 
-%token <int64 * string> CLASS SUBCLASS PROGIF VENDOR DEVICE
-%token <(int64 * int64) * string> SUBDEVICE
+%token <Pci_db_types.Id.t * string> CLASS SUBCLASS PROGIF VENDOR DEVICE SUBDEVICE
 %token EOF
 
 %start file
-%type <unit> file
+%type <Pci_db_types.t> file
 
 %%
 
 file:
-	| EOF { }
-	| classes file { }
-	| vendors file { }
+	| EOF { { classes = IdMap.empty; vendors = IdMap.empty } }
+	| classes file { { $2 with classes = $1 } }
+	| vendors file { { $2 with vendors = $1 } }
 	;
 
 /* Parsing for the classes section of the pci.ids file */
 classes:
-	| { [] }
-	| classs classes { $1 :: $2 }
+	| { IdMap.empty }
+	| classs classes { IdMap.add (fst $1) (snd $1) $2 }
 	;
 classs:
-	| CLASS subclasses { Printf.printf "%s\n%s" (string_of_token (CLASS $1)) (String.concat "" $2) }
+	| CLASS subclasses { (fst $1), { c_name = (snd $1); subclasses = $2 } }
 subclasses:
-	| { [] }
-	| subclass subclasses { $1 :: $2 }
+	| { IdMap.empty }
+	| subclass subclasses { IdMap.add (fst $1) (snd $1) $2 }
 	;
 subclass:
-	| SUBCLASS progifs { Printf.sprintf "\t%s\n%s" (string_of_token (SUBCLASS $1)) (String.concat "" $2) }
+	| SUBCLASS progifs { (fst $1), { sc_name = (snd $1); progifs = $2 } }
 	;
 progifs:
-	| { [] }
-	| progif progifs { $1 :: $2 }
+	| { IdMap.empty }
+	| progif progifs { IdMap.add (fst $1) (snd $1) $2 }
 	;
 progif:
-	| PROGIF { Printf.sprintf "\t\t%s\n" (string_of_token (PROGIF $1)) }
+	| PROGIF { (fst $1), { pi_name = (snd $1); } }
 	;
 
 /* Parsing for the vendors and devices section of the pci.ids file */
 vendors:
-	| { [] }
-	| vendor vendors { $1 :: $2 }
+	| { IdMap.empty }
+	| vendor vendors { IdMap.add (fst $1) (snd $1) $2 }
 	;
 vendor:
-	| VENDOR devices { Printf.printf "%s\n%s" (string_of_token (VENDOR $1)) (String.concat "" $2) }
+	| VENDOR devices { (fst $1), { v_name = (snd $1); devices = $2 } }
 devices:
-	| { [] }
-	| device devices { $1 :: $2 }
+	| { IdMap.empty }
+	| device devices { IdMap.add (fst $1) (snd $1) $2 }
 	;
 device:
-	| DEVICE subdevices { Printf.sprintf "\t%s\n%s" (string_of_token (DEVICE $1)) (String.concat "" $2) }
+	| DEVICE subdevices { (fst $1), { d_name = (snd $1); subdevices = $2 }}
 	;
 subdevices:
-	| { [] }
-	| subdevice subdevices { $1 :: $2 }
+	| { IdMap.empty }
+	| subdevice subdevices { IdMap.add (fst $1) (snd $1) $2 }
 	;
 subdevice:
-	| SUBDEVICE { Printf.sprintf "\t\t%s\n" (string_of_token (SUBDEVICE $1)) }
+	| SUBDEVICE { (fst $1), { sd_name = (snd $1) } }
 	;
