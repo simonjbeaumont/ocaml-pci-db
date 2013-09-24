@@ -6,4 +6,3 @@ obuild-ver: 1
 library pci_db
   src-dir: lib
   modules: pci_db_types, pci_ids_lexer, pci_ids_lexer, pci_db
-  build-deps: unix

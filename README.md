@@ -7,7 +7,6 @@ Build dependencies
 ------------------
 
 * [obuild](https://github.com/vincenthz/obuild)
-* [stdext](https://github.com/xapi-project/stdext)
 
 Installation
 ------------
@@ -49,8 +48,3 @@ It's also possible to use this library in scripts using the following:
 #use "topfind"
 #require "pci-db"
 ```
-
-Todo
-----
-- Remove dependency on `stdext`
-- Use `ocamlyacc`/`ocamllex` for parsing
