@@ -7,7 +7,6 @@ Build dependencies
 ------------------
 
 * [obuild](https://github.com/vincenthz/obuild)
-* [stdext](https://github.com/xapi-project/stdext)
 
 Installation
 ------------
@@ -41,7 +40,7 @@ $ ./trial
 The 'G72M [Quadro NVS 110M]' is a 'Display controller' and is made by 'NVIDIA Corporation'.
 ```
 
-It's also possible to use this library in the top-level using the following:
+It's also possible to use this library in scripts using the following:
 
 ```ocaml
 #!/path/to/ocaml
@@ -49,7 +48,3 @@ It's also possible to use this library in the top-level using the following:
 #use "topfind"
 #require "pci-db"
 ```
-
-Todo
-----
-- Remove dependency on stdext

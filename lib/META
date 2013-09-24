@@ -1,6 +1,5 @@
-version = "0.1"
+version = "0.2"
 description = "Library to parse and query the pci.ids database of PCI devices"
-requires = "unix stdext"
 archive(byte) = "pci_db.cma"
 archive(byte, plugin) = "pci_db.cma"
 archive(native) = "pci_db.cmxa"
