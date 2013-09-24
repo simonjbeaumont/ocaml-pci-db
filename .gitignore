@@ -1,3 +1,6 @@
 *.swp
+*.cmo
+*.cmi
 
 dist/
+lib/test/print_db

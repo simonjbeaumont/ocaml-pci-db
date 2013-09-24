@@ -12,22 +12,17 @@
  * GNU Lesser General Public License for more details.
  *)
 
-type t
+open Pci_db_types
 
-type class_id = int64
-type subclass_id = int64
-type vendor_id = int64
-type subvendor_id = int64
-type device_id = int64
-type subdevice_id = int64
+type t
 
 val pci_ids_path : string
 
-val get_class_name : t -> class_id -> string
-val get_subclass_name : t -> class_id -> subclass_id -> string
-val get_vendor_name : t -> vendor_id -> string
-val get_device_name : t -> vendor_id -> device_id -> string
-val get_subdevice_name : t -> vendor_id -> device_id -> subvendor_id -> subdevice_id -> string
+val get_class_name : t -> Id.t -> string
+val get_subclass_name : t -> Id.t -> Id.t -> string
+val get_vendor_name : t -> Id.t -> string
+val get_device_name : t -> Id.t -> Id.t -> string
+val get_subdevice_name : t -> Id.t -> Id.t -> int64 -> int64 -> string
 
 val print : t -> unit
 
