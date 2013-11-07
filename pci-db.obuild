@@ -6,3 +6,8 @@ obuild-ver: 1
 library pci_db
   src-dir: lib
   modules: pci_db_types, pci_ids_lexer, pci_ids_lexer, pci_db
+
+test test_pci_db
+  main: test_pci_db.ml
+  src-dir: lib_test
+  build-deps: pci_db, oUnit
