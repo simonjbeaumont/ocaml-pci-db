@@ -99,6 +99,6 @@ let print t =
 	) t.vendors
 
 let of_file path =
-	let ic = open_in "/usr/share/hwdata/pci.ids" in
+	let ic = open_in path in
 	let lexbuf = Lexing.from_channel ic in
 	Pci_ids_parser.file Pci_ids_lexer.token lexbuf
