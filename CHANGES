@@ -1,2 +1,5 @@
+0.2.0 [2013-11-07]:
+* Move to ocamlyacc/lex for parsing pci.ids
+
 0.1.0 [2013-09-10]:
 * Initial version
