@@ -26,7 +26,7 @@
 	0002  SimpleDeviceName-3-2
 	0003  SimpleDeviceName-3-3
 		0003 0004  SimpleSubDeviceName-3-3-3-4
-0004  SimpleVendorName
+0004  SimpleVendorName4
 
 # Using whitespace in last field
 0005  VendorName with whitespace
@@ -39,7 +39,7 @@
 		000e 000f  SubDeviceName	with	tabs	included
 
 # Using punctuation
-0005  VendorName with punctuation :;<=>?@[\]^_`{|}~`/
+0006  VendorName with punctuation :;<=>?@[\]^_`{|}~`/
 
 # This the standard illegal name
 ffff  Illegal Vendor ID
