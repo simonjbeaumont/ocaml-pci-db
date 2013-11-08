@@ -24,6 +24,7 @@ val get_vendor_name : t -> Id.t -> string
 val get_device_name : t -> Id.t -> Id.t -> string
 val get_subdevice_name : t -> Id.t -> Id.t -> int64 -> int64 -> string
 
+val to_string : t -> string
 val print : t -> unit
 
 val of_file : string -> t

@@ -1,7 +1,7 @@
 open OUnit
 open Pci_db_types.Id
 
-let skip_test_print = true
+let skip_test_print = false
 
 (* Utility functions *)
 
@@ -85,17 +85,23 @@ let test_get_device_name _ =
 			bad_combos
 	)
 
-let test_print _ =
-	skip_if skip_test_print "test_print";
+let test_to_string _ =
 	with_test_db (fun db ->
-		Pci_db.print db
+		let db_str = Pci_db.to_string db in
+		let rec count_lines s acc =
+			try 
+				count_lines (String.sub s 1 (String.length s - 1))
+					(if s.[0] = '\n' then succ acc else acc)
+			with Invalid_argument _ -> acc
+		in
+		"Check expected items in parsed db" @? (count_lines db_str 0 = 21)
 	)
 
 let _ =
 	let suite = "pci_db" >:::
 		[
 			"test_of_file" >:: test_of_file;
-			"test_print" >:: test_print;
+			"test_to_string" >:: test_to_string;
 			"test_get_vendor_name" >:: test_get_vendor_name;
 			"test_get_device_name" >:: test_get_device_name;
 		]
