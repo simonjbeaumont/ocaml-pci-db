@@ -1,7 +1,7 @@
-.PHONY: install uninstall clean
+.PHONY: install uninstall clean test
 
-dist/build/lib-pci_db/pci_db.cmxa:
-	obuild configure
+dist: lib/*.ml* lib_test/*.ml
+	obuild configure --enable-tests
 	obuild build
 
 install:
@@ -13,3 +13,6 @@ uninstall:
 
 clean:
 	rm -rf dist
+
+test: dist
+	obuild test --output

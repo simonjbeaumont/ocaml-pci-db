@@ -78,27 +78,34 @@ let get_subdevice_names_by_id t v_id d_id sd_id =
 let string_of_definition id name =
 	Printf.sprintf "%s %s\n" (Id.to_string id) name
 
-let print t =
-	IdMap.iter (fun id c ->
-		print_string (string_of_definition id c.c_name);
-		IdMap.iter (fun id sc ->
-			print_string (string_of_definition id sc.sc_name);
-			IdMap.iter (fun id pi ->
-				print_string (string_of_definition id pi.pi_name)
-			) sc.progifs
-		) c.subclasses
-	) t.classes;
-	IdMap.iter (fun id v ->
-		print_string (string_of_definition id v.v_name);
-		IdMap.iter (fun id d ->
-			print_string (string_of_definition id d.d_name);
-			IdMap.iter (fun id sd ->
-				print_string (string_of_definition id sd.sd_name)
-			) d.subdevices
-		) v.devices
-	) t.vendors
+let to_string t =
+	Printf.sprintf "%s%s"
+		(IdMap.fold (fun id c acc ->
+			Printf.sprintf "%s%s%s" acc
+				(string_of_definition id c.c_name)
+				(IdMap.fold (fun id sc acc ->
+					Printf.sprintf "%s%s%s" acc
+					(string_of_definition id sc.sc_name)
+					(IdMap.fold (fun id pi acc ->
+						string_of_definition id pi.pi_name
+					) sc.progifs "")
+				) c.subclasses "")
+		) t.classes "")
+		(IdMap.fold (fun id v acc ->
+			Printf.sprintf "%s%s%s" acc
+				(string_of_definition id v.v_name)
+				(IdMap.fold (fun id d acc ->
+					Printf.sprintf "%s%s%s" acc
+					(string_of_definition id d.d_name)
+					(IdMap.fold (fun id sd acc ->
+						string_of_definition id sd.sd_name
+					) d.subdevices "")
+				) v.devices "")
+		) t.vendors "")
+
+let print t = print_string (to_string t)
 
 let of_file path =
-	let ic = open_in "/usr/share/hwdata/pci.ids" in
+	let ic = open_in path in
 	let lexbuf = Lexing.from_channel ic in
 	Pci_ids_parser.file Pci_ids_lexer.token lexbuf
