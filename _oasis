@@ -1,0 +1,28 @@
+OASISFormat: 0.3
+Name:        pci-db
+Version:     0.2.0
+Synopsis:    Library to parse and query the pci.ids database of PCI devices
+Authors:     Si Beaumont
+Maintainers: Si Beaumont <simon.beaumont@citrix.com>
+Homepage:    https://github.com/simonjbeaumont/ocaml-pci-db
+License:     LGPL-2.1 with OCaml linking exception
+Plugins:     META (0.3)
+BuildTools:  ocamlbuild
+
+Library pci_db
+  Path:             lib
+  Modules:          Pci_db, Pci_db_types
+  InternalModules:  Pci_ids_lexer, Pci_ids_parser
+
+Executable test_pci_db
+  Path:             lib_test
+  MainIs:           test_pci_db.ml
+  Build$:           flag(tests)
+  CompiledObject:   best
+  Install:          false
+  BuildDepends:     pci_db, oUnit
+
+Test test_pci_db
+  Run$:             flag(tests)
+  Command:          $test_pci_db
+  WorkingDirectory: lib_test

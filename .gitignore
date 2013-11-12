@@ -1,6 +1,8 @@
 *.swp
-*.cmo
-*.cmi
-
-dist/
-lib/test/print_db
+_build/
+setup.data
+setup.log
+setup.bin
+*.native
+*.byte
+*.annot
