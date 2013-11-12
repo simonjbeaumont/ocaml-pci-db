@@ -1,7 +1,12 @@
+# OASIS_START
+# DO NOT EDIT (digest: 42832b0ea6be9a65d0e414524e935d1c)
 version = "0.2.0"
-description = "Library to parse and query the pci.ids database of PCI devices"
+description =
+"Library to parse and query the pci.ids database of PCI devices"
 archive(byte) = "pci_db.cma"
 archive(byte, plugin) = "pci_db.cma"
 archive(native) = "pci_db.cmxa"
-archive(native, plugin) = "pci_db.cmxa"
-exists_of = "pci_db.cma"
+archive(native, plugin) = "pci_db.cmxs"
+exists_if = "pci_db.cma"
+# OASIS_STOP
+

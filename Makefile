@@ -1,18 +1,37 @@
-.PHONY: install uninstall clean test
+.PHONY: all clean install build
+all: build doc
 
-dist: lib/*.ml* lib_test/*.ml
-	obuild configure --enable-tests
-	obuild build
+NAME=pci-db
+J=4
 
-install:
-	ocamlfind install pci-db lib/META \
-		$(wildcard dist/build/lib-pci_db/*)
+export OCAMLRUNPARAM=b
+
+setup.bin: setup.ml
+	@ocamlopt.opt -o $@ $< || ocamlopt -o $@ $< || ocamlc -o $@ $<
+	@rm -f setup.cmx setup.cmi setup.o setup.cmo
+
+setup.data: setup.bin
+	@./setup.bin -configure --enable-tests
+
+build: setup.data setup.bin
+	@./setup.bin -build -j $(J)
+
+doc: setup.data setup.bin
+	@./setup.bin -doc -j $(J)
+
+install: setup.bin
+	@./setup.bin -install
 
 uninstall:
-	ocamlfind remove pci-db
+	@ocamlfind remove $(NAME) || true
+
+test: setup.bin build
+	@./setup.bin -test
+
+reinstall: setup.bin
+	@ocamlfind remove $(NAME) || true
+	@./setup.bin -reinstall
 
 clean:
-	rm -rf dist
-
-test: dist
-	obuild test --output
+	@ocamlbuild -clean
+	@rm -f setup.data setup.log setup.bin

@@ -20,15 +20,10 @@ let rec all_pairs xs ys acc =
 	| [] -> acc
 	| x::xs -> all_pairs xs ys (prefix x ys acc)
 
-let test_db =
-	let open Filename in
-	String.concat dir_sep
-		[ (foldi 4 dirname Sys.executable_name); "lib_test"; "mock-pci.ids" ]
-
 (* Tests *)
 
 let with_test_db (f: Pci_db.t -> unit) =
-	let pci_db = Pci_db.of_file test_db in
+	let pci_db = Pci_db.of_file "./mock-pci.ids" in
 	f pci_db
 
 let test_of_file _ =
