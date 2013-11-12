@@ -10,19 +10,19 @@ Plugins:     META (0.3)
 BuildTools:  ocamlbuild
 
 Library pci_db
-  Path:       lib
-  Modules:    Pci_db, Pci_db_types
-  InternalModules: Pci_ids_lexer, Pci_ids_parser
+  Path:             lib
+  Modules:          Pci_db, Pci_db_types
+  InternalModules:  Pci_ids_lexer, Pci_ids_parser
 
 Executable test_pci_db
-  Path:       lib_test
-  MainIs:     test_pci_db.ml
-  Build$:     flag(tests)
-  CompiledObject: best
-  Install: false
-  BuildDepends: pci_db, oUnit
+  Path:             lib_test
+  MainIs:           test_pci_db.ml
+  Build$:           flag(tests)
+  CompiledObject:   best
+  Install:          false
+  BuildDepends:     pci_db, oUnit
 
 Test test_pci_db
-  Run$:    flag(tests)
-  Command: $test_pci_db
+  Run$:             flag(tests)
+  Command:          $test_pci_db
   WorkingDirectory: lib_test
