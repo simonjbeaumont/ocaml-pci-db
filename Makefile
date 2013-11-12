@@ -1,7 +1,7 @@
 .PHONY: all clean install build
 all: build doc
 
-NAME=pci-db
+NAME=pci_db
 J=4
 
 export OCAMLRUNPARAM=b

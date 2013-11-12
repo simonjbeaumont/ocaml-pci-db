@@ -1,4 +1,7 @@
 # OASIS_START
-# DO NOT EDIT (digest: 179c9b99ba039d24f5597776446099f0)
+# DO NOT EDIT (digest: 89291f9fc7a5394725435c4df0723a5e)
 Pci_db
+Pci_db_types
+Pci_ids_lexer
+Pci_ids_parser
 # OASIS_STOP

@@ -11,7 +11,8 @@ BuildTools:  ocamlbuild
 
 Library pci_db
   Path:       lib
-  Modules:    Pci_db
+  Modules:    Pci_db, Pci_db_types
+  InternalModules: Pci_ids_lexer, Pci_ids_parser
 
 Executable test_pci_db
   Path:       lib_test
