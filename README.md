@@ -6,7 +6,7 @@ Library to parse and query the pci.ids database of PCI devices.
 Build dependencies
 ------------------
 
-* [obuild](https://github.com/vincenthz/obuild)
+* [OUnit](http://ounit.forge.ocamlcore.org/)
 
 Installation
 ------------
