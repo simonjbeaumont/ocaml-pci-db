@@ -1,4 +1,4 @@
-ocaml-pci-db
+ocaml-pci-db [![Build Status](https://travis-ci.org/simonjbeaumont/ocaml-pci-db.png)](https://travis-ci.org/simonjbeaumont/ocaml-pci-db)
 ============
 
 Library to parse and query the pci.ids database of PCI devices.
