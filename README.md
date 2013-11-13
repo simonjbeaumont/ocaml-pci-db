@@ -52,5 +52,5 @@ It's also possible to use this library in scripts using the following:
 #!/path/to/ocaml
 
 #use "topfind"
-#require "pci-db"
+#require "pci_db"
 ```
