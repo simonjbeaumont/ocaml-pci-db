@@ -1,3 +1,6 @@
+0.2.1 [2014-03-31]:
+* Rename findlib package to pci-db
+
 0.2.0 [2013-11-07]:
 * Move to ocamlyacc/lex for parsing pci.ids
 

@@ -1,5 +1,5 @@
 (* OASIS_START *)
-(* DO NOT EDIT (digest: cf2c3c00d28d3dcd075be9833a365889) *)
+(* DO NOT EDIT (digest: fa034d085a4e661d30a80100c050cbed) *)
 module OASISGettext = struct
 (* # 21 "src/oasis/OASISGettext.ml" *)
 
@@ -480,8 +480,8 @@ let package_default =
      MyOCamlbuildBase.lib_ocaml = [("pci_db", ["lib"])];
      lib_c = [];
      flags = [];
-     includes = [("lib_test", ["lib"])];
-     }
+     includes = []
+  }
   ;;
 
 let dispatch_default = MyOCamlbuildBase.dispatch_default package_default;;
