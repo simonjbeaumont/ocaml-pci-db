@@ -1,37 +1,40 @@
-.PHONY: all clean install build
-all: build doc
+CONFIGUREFLAGS = --enable-tests
 
-NAME=pci_db
-J=4
+# OASIS_START
+# DO NOT EDIT (digest: bc1e05bfc8b39b664f29dae8dbd3ebbb)
 
-export OCAMLRUNPARAM=b
+SETUP = ocaml setup.ml
 
-setup.bin: setup.ml
-	@ocamlopt.opt -o $@ $< || ocamlopt -o $@ $< || ocamlc -o $@ $<
-	@rm -f setup.cmx setup.cmi setup.o setup.cmo
+build: setup.data
+	$(SETUP) -build $(BUILDFLAGS)
 
-setup.data: setup.bin
-	@./setup.bin -configure --enable-tests
+doc: setup.data build
+	$(SETUP) -doc $(DOCFLAGS)
 
-build: setup.data setup.bin
-	@./setup.bin -build -j $(J)
+test: setup.data build
+	$(SETUP) -test $(TESTFLAGS)
 
-doc: setup.data setup.bin
-	@./setup.bin -doc -j $(J)
+all: 
+	$(SETUP) -all $(ALLFLAGS)
 
-install: setup.bin
-	@./setup.bin -install
+install: setup.data
+	$(SETUP) -install $(INSTALLFLAGS)
 
-uninstall:
-	@ocamlfind remove $(NAME) || true
+uninstall: setup.data
+	$(SETUP) -uninstall $(UNINSTALLFLAGS)
 
-test: setup.bin build
-	@./setup.bin -test
+reinstall: setup.data
+	$(SETUP) -reinstall $(REINSTALLFLAGS)
 
-reinstall: setup.bin
-	@ocamlfind remove $(NAME) || true
-	@./setup.bin -reinstall
+clean: 
+	$(SETUP) -clean $(CLEANFLAGS)
 
-clean:
-	@ocamlbuild -clean
-	@rm -f setup.data setup.log setup.bin
+distclean: 
+	$(SETUP) -distclean $(DISTCLEANFLAGS)
+
+setup.data:
+	$(SETUP) -configure $(CONFIGUREFLAGS)
+
+.PHONY: build doc test all install uninstall reinstall clean distclean configure
+
+# OASIS_STOP

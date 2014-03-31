@@ -6,7 +6,7 @@ Authors:     Si Beaumont
 Maintainers: Si Beaumont <simon.beaumont@citrix.com>
 Homepage:    https://github.com/simonjbeaumont/ocaml-pci-db
 License:     LGPL-2.1 with OCaml linking exception
-Plugins:     META (0.3)
+Plugins:     META (0.3), DevFiles (0.3)
 BuildTools:  ocamlbuild
 
 Library pci_db
@@ -21,7 +21,7 @@ Executable test_pci_db
   Build$:           flag(tests)
   CompiledObject:   best
   Install:          false
-  BuildDepends:     pci_db, oUnit
+  BuildDepends:     pci-db, oUnit
 
 Test test_pci_db
   Run$:             flag(tests)
