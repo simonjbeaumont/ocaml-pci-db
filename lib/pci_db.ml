@@ -75,6 +75,10 @@ let get_subdevice_names_by_id t v_id d_id sd_id =
 	in
 	IdMap.fold (fun key sd names -> sd.sd_name :: names) matching []
 
+let merge t t' class_merge_fun vendor_merge_fun =
+    { classes = IdMap.merge class_merge_fun t.classes t'.classes;
+      vendors = IdMap.merge vendor_merge_fun t.vendors t'.vendors; }
+
 let string_of_definition id name =
 	Printf.sprintf "%s %s\n" (Id.to_string id) name
 

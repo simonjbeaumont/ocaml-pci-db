@@ -1,3 +1,6 @@
+0.3.0 [2014-04-01]:
+* Add support for merging two databases
+
 0.2.1 [2014-03-31]:
 * Rename findlib package to pci-db
 
