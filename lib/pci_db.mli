@@ -28,6 +28,6 @@ val merge : t -> t ->
     (id -> classs option -> classs option -> classs option) ->
     (id -> vendor option -> vendor option -> vendor option) -> t
 
-val to_string : t -> string
+val string_of : t -> string
 
 val of_file : string -> t

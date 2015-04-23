@@ -82,7 +82,7 @@ let merge t t' class_merge_fun vendor_merge_fun =
 let string_of_definition id name =
 	Printf.sprintf "%s %s\n" (string_of_id id) name
 
-let to_string t =
+let string_of t =
 	Printf.sprintf "%s%s"
 		(IdMap.fold (fun id c acc ->
 			Printf.sprintf "%s%s%s" acc

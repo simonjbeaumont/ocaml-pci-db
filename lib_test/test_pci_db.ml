@@ -80,9 +80,9 @@ let test_get_device_name _ =
 			bad_combos
 	)
 
-let test_to_string _ =
+let test_string_of _ =
 	with_test_db (fun db ->
-		let db_str = Pci_db.to_string db in
+		let db_str = Pci_db.string_of db in
 		let rec count_lines s acc =
 			try 
 				count_lines (String.sub s 1 (String.length s - 1))
@@ -96,7 +96,7 @@ let _ =
 	let suite = "pci_db" >:::
 		[
 			"test_of_file" >:: test_of_file;
-			"test_to_string" >:: test_to_string;
+			"test_string_of" >:: test_string_of;
 			"test_get_vendor_name" >:: test_get_vendor_name;
 			"test_get_device_name" >:: test_get_device_name;
 		]
