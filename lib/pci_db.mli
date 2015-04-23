@@ -24,9 +24,8 @@ val get_vendor_name : t -> id -> string
 val get_device_name : t -> id -> id -> string
 val get_subdevice_name : t -> id -> id -> int64 -> int64 -> string
 
-val merge : t -> t ->
-    (id -> classs option -> classs option -> classs option) ->
-    (id -> vendor option -> vendor option -> vendor option) -> t
+type merge_strategy = Ours | Theirs
+val merge : merge_strategy -> t -> t -> t
 
 val string_of : t -> string
 

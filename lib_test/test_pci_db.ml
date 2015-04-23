@@ -89,6 +89,7 @@ let test_string_of _ =
 					(if s.[0] = '\n' then succ acc else acc)
 			with Invalid_argument _ -> acc
 		in
+		print_string db_str;
 		"Check expected items in parsed db" @? (count_lines db_str 0 = 21)
 	)
 

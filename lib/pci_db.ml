@@ -75,9 +75,14 @@ let get_subdevice_names_by_id t v_id d_id sd_id =
 	in
 	IdMap.fold (fun key sd names -> sd.sd_name :: names) matching []
 
-let merge t t' class_merge_fun vendor_merge_fun =
-    { classes = IdMap.merge class_merge_fun t.classes t'.classes;
-      vendors = IdMap.merge vendor_merge_fun t.vendors t'.vendors; }
+type merge_strategy = Ours | Theirs
+let merge strategy t t' =
+	(* FIXME: This needs to be recursive through the sub-maps *)
+	let ours _ x y = match x with Some _ -> x | _ -> y
+	and theirs _ x y = match y with Some _ -> y | _ -> x in
+	let merge_f = match strategy with Ours -> ours | Theirs -> theirs in
+	{ classes = IdMap.merge merge_f t.classes t'.classes;
+	  vendors = IdMap.merge merge_f t.vendors t'.vendors; }
 
 let string_of_definition id name =
 	Printf.sprintf "%s %s\n" (string_of_id id) name
