@@ -107,8 +107,6 @@ let to_string t =
 				) v.devices "")
 		) t.vendors "")
 
-let print t = print_string (to_string t)
-
 let of_file path =
 	let ic = open_in path in
 	let lexbuf = Lexing.from_channel ic in

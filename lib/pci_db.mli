@@ -29,6 +29,5 @@ val merge : t -> t ->
     (id -> vendor option -> vendor option -> vendor option) -> t
 
 val to_string : t -> string
-val print : t -> unit
 
 val of_file : string -> t
