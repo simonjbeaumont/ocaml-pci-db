@@ -1,19 +1,17 @@
-module Id = struct
-	type t =
-		| CLASS_ID of int64
-		| SUBCLASS_ID of int64
-		| PROGIF_ID of int64
-		| VENDOR_ID of int64
-		| DEVICE_ID of int64
-		| SUBDEVICE_ID of int64 * int64
-	let to_string = function
+type id =
+	| CLASS_ID of int64
+	| SUBCLASS_ID of int64
+	| PROGIF_ID of int64
+	| VENDOR_ID of int64
+	| DEVICE_ID of int64
+	| SUBDEVICE_ID of int64 * int64
+
+let string_of_id = function
 		| CLASS_ID x | SUBCLASS_ID x | PROGIF_ID x -> Printf.sprintf "%02Lx" x
 		| VENDOR_ID x | DEVICE_ID x -> Printf.sprintf "%04Lx" x
 		| SUBDEVICE_ID (x, y) -> Printf.sprintf "%04Lx %04Lx" x y
-	let compare = compare
-end
 
-module IdMap = Map.Make(Id)
+module IdMap = Map.Make(struct type t = id;; let compare = compare end)
 
 type progif = {
 	pi_name : string;

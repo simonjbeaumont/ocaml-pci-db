@@ -2,7 +2,7 @@
 open Pci_db_types
 %}
 
-%token <Pci_db_types.Id.t * string> CLASS SUBCLASS PROGIF VENDOR DEVICE SUBDEVICE
+%token <Pci_db_types.id * string> CLASS SUBCLASS PROGIF VENDOR DEVICE SUBDEVICE
 %token EOF
 
 %start file

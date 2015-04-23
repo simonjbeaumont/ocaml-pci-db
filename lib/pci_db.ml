@@ -62,14 +62,14 @@ let get_subdevice t v_id d_id sv_sd_id =
 	let d = get_device t v_id d_id in
 	IdMap.find sv_sd_id d.subdevices
 let get_subdevice_name t v_id d_id sv_id sd_id =
-	let id = Id.SUBDEVICE_ID (sv_id, sd_id) in
+	let id = SUBDEVICE_ID (sv_id, sd_id) in
 	let sd = get_subdevice t v_id d_id id in sd.sd_name
 let get_subdevice_names_by_id t v_id d_id sd_id =
 	let d = get_device t v_id d_id in
 	let matching =
 		IdMap.filter (fun key sd ->
 			match key with
-			| Id.SUBDEVICE_ID (_, id) -> id = sd_id
+			| SUBDEVICE_ID (_, id) -> id = sd_id
 			| _ -> false
 		) d.subdevices
 	in
@@ -80,7 +80,7 @@ let merge t t' class_merge_fun vendor_merge_fun =
       vendors = IdMap.merge vendor_merge_fun t.vendors t'.vendors; }
 
 let string_of_definition id name =
-	Printf.sprintf "%s %s\n" (Id.to_string id) name
+	Printf.sprintf "%s %s\n" (string_of_id id) name
 
 let to_string t =
 	Printf.sprintf "%s%s"

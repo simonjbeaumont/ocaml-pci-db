@@ -1,5 +1,5 @@
 open OUnit
-open Pci_db_types.Id
+open Pci_db_types
 
 let skip_test_print = false
 
@@ -46,7 +46,7 @@ let test_get_vendor_name _ =
 		assert_raises ~msg:"Lookup with non-existent id" Not_found
 			(fun () -> Pci_db.get_vendor_name db (VENDOR_ID 7L));
 		List.iter
-			(fun (id: t) ->
+			(fun id ->
 				assert_raises ~msg:"Lookup with wrong id type constructor"
 				Not_found (fun () -> Pci_db.get_vendor_name db id))
 			[ CLASS_ID 1L; SUBCLASS_ID 1L; DEVICE_ID 1L ]
@@ -74,7 +74,7 @@ let test_get_device_name _ =
 			(all_pairs ids ids [])
 		in
 		List.iter
-			(fun ((id, id'): t * t) ->
+			(fun (id, id') ->
 				assert_raises ~msg:"Lookup with wrong id type constructor"
 				Not_found (fun () -> Pci_db.get_device_name db id id'))
 			bad_combos

@@ -30,7 +30,7 @@ Simple module which uses `Pci_db` to find PCI device information:
 ```ocaml
 let () =
   let pci_db = Pci_db.of_file Pci_db.pci_ids_path in
-  let open Pci_db_types.Id in
+  let open Pci_db_types in
   let class_name = Pci_db.get_class_name pci_db (CLASS_ID 0x03L) in
   let vendor_name = Pci_db.get_vendor_name pci_db (VENDOR_ID 0x10deL) in
   let device_name = Pci_db.get_device_name pci_db (VENDOR_ID 0x10deL) (DEVICE_ID 0x01daL) in
