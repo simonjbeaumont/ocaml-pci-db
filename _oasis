@@ -25,5 +25,6 @@ Executable test_pci_db
 
 Test test_pci_db
   Run$:             flag(tests)
+  TestTools:        test_pci_db
   Command:          $test_pci_db
   WorkingDirectory: lib_test
