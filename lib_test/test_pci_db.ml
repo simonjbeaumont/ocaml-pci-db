@@ -34,15 +34,15 @@ let test_find_vendor_name _ =
 				assert_equal ~printer:id expected_name
 					(Pci_db.find_vendor_name db vendor_id))
 			[
-				(1L, "SimpleVendorName1");
-				(2L, "SimpleVendorName2");
-				(3L, "SimpleVendorName3");
-				(4L, "SimpleVendorName4");
-				(5L, "VendorName with whitespace");
-				(6L, "VendorName with punctuation :;<=>?@[\\]^_`{|}~`/");
+				(1, "SimpleVendorName1");
+				(2, "SimpleVendorName2");
+				(3, "SimpleVendorName3");
+				(4, "SimpleVendorName4");
+				(5, "VendorName with whitespace");
+				(6, "VendorName with punctuation :;<=>?@[\\]^_`{|}~`/");
 			];
 		assert_raises ~msg:"Lookup with non-existent id" Not_found
-			(fun () -> Pci_db.find_vendor_name db 7L)
+			(fun () -> Pci_db.find_vendor_name db 7)
 	)
 
 let test_find_device_name _ =
@@ -53,14 +53,14 @@ let test_find_device_name _ =
 					(Pci_db.find_device_name db vendor_id
 						dev_id))
 			[
-				(2L, 0x1L, "SimpleDeviceName-2-1");
-				(3L, 0x1L, "SimpleDeviceName-3-1");
-				(3L, 0x2L, "SimpleDeviceName-3-2");
-				(3L, 0x3L, "SimpleDeviceName-3-3");
-				(5L, 0xaL, "DeviceName with whitespace and hex ID");
+				(2, 0x1, "SimpleDeviceName-2-1");
+				(3, 0x1, "SimpleDeviceName-3-1");
+				(3, 0x2, "SimpleDeviceName-3-2");
+				(3, 0x3, "SimpleDeviceName-3-3");
+				(5, 0xa, "DeviceName with whitespace and hex ID");
 			];
 		assert_raises ~msg:"Lookup with non-existent id" Not_found
-			(fun () -> Pci_db.find_device_name db 2L 4L)
+			(fun () -> Pci_db.find_device_name db 2 4)
 	)
 
 let test_string_of _ =

@@ -22,7 +22,7 @@ val find_class_name : t -> id -> string
 val find_subclass_name : t -> id -> id -> string
 val find_vendor_name : t -> id -> string
 val find_device_name : t -> id -> id -> string
-val find_subdevice_name : t -> id -> id -> int64 -> int64 -> string
+val find_subdevice_name : t -> id -> id -> id -> id -> string
 
 type merge_strategy = Ours | Theirs
 val merge : merge_strategy -> t -> t -> t

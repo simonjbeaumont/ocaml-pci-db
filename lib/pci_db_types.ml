@@ -1,4 +1,4 @@
-module IdMap = Map.Make(Int64)
+module IdMap = Map.Make(struct type t = int let compare = compare end)
 type id = IdMap.key
 
 type progif = {

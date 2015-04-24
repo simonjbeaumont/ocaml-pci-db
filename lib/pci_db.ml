@@ -83,24 +83,24 @@ let string_of t =
 	Printf.sprintf "%s%s"
 		(IdMap.fold (fun id c acc ->
 			Printf.sprintf "%s%s%s" acc
-				(Printf.sprintf "%02Lx %s\n" id c.c_name)
+				(Printf.sprintf "%02x %s\n" id c.c_name)
 				(IdMap.fold (fun id sc acc ->
 					Printf.sprintf "%s%s%s" acc
-					(Printf.sprintf "%02Lx %s\n" id sc.sc_name)
+					(Printf.sprintf "%02x %s\n" id sc.sc_name)
 					(IdMap.fold (fun id pi acc ->
-						Printf.sprintf "%02Lx %s\n" id pi.pi_name
+						Printf.sprintf "%02x %s\n" id pi.pi_name
 					) sc.progifs "")
 				) c.subclasses "")
 		) t.classes "")
 		(IdMap.fold (fun id v acc ->
 			Printf.sprintf "%s%s%s" acc
-				(Printf.sprintf "%04Lx %s\n" id v.v_name)
+				(Printf.sprintf "%04x %s\n" id v.v_name)
 				(IdMap.fold (fun id d acc ->
 					Printf.sprintf "%s%s%s" acc
-					(Printf.sprintf "%04Lx %s\n" id d.d_name)
+					(Printf.sprintf "%04x %s\n" id d.d_name)
 					(IdMap.fold (fun sv_id sd_map acc ->
 						IdMap.fold (fun sd_id sd acc ->
-							Printf.sprintf "%04Lx %04Lx %s\n" sv_id sd_id sd.sd_name
+							Printf.sprintf "%04x %04x %s\n" sv_id sd_id sd.sd_name
 						) sd_map ""
 					) d.subdevices "")
 				) v.devices "")

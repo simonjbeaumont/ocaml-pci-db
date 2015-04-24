@@ -1,8 +1,8 @@
 {
 	open Pci_db_types
 	open Pci_ids_parser
-	let ioh = fun s -> Scanf.sscanf s "%Lx" (fun x -> x)
-	let hex_str_of_int = fun x -> Printf.sprintf "0x%Lx" x
+	let ioh = fun s -> Scanf.sscanf s "%x" (fun x -> x)
+	let hex_str_of_int = fun x -> Printf.sprintf "0x%x" x
 	let section = ref None
 }
 
