@@ -27,12 +27,12 @@ let with_test_db (f: Pci_db.t -> unit) =
 let test_of_file _ =
 	with_test_db (fun _ -> ())
 
-let test_get_vendor_name _ =
+let test_find_vendor_name _ =
 	with_test_db (fun db ->
 		List.iter
 			(fun (vendor_id, expected_name) ->
 				assert_equal ~printer:id expected_name
-					(Pci_db.get_vendor_name db vendor_id))
+					(Pci_db.find_vendor_name db vendor_id))
 			[
 				(1L, "SimpleVendorName1");
 				(2L, "SimpleVendorName2");
@@ -42,15 +42,15 @@ let test_get_vendor_name _ =
 				(6L, "VendorName with punctuation :;<=>?@[\\]^_`{|}~`/");
 			];
 		assert_raises ~msg:"Lookup with non-existent id" Not_found
-			(fun () -> Pci_db.get_vendor_name db 7L)
+			(fun () -> Pci_db.find_vendor_name db 7L)
 	)
 
-let test_get_device_name _ =
+let test_find_device_name _ =
 	with_test_db (fun db ->
 		List.iter
 			(fun (vendor_id, dev_id, expected_name) ->
 				assert_equal ~printer:id expected_name
-					(Pci_db.get_device_name db vendor_id
+					(Pci_db.find_device_name db vendor_id
 						dev_id))
 			[
 				(2L, 0x1L, "SimpleDeviceName-2-1");
@@ -60,7 +60,7 @@ let test_get_device_name _ =
 				(5L, 0xaL, "DeviceName with whitespace and hex ID");
 			];
 		assert_raises ~msg:"Lookup with non-existent id" Not_found
-			(fun () -> Pci_db.get_device_name db 2L 4L)
+			(fun () -> Pci_db.find_device_name db 2L 4L)
 	)
 
 let test_string_of _ =
@@ -81,8 +81,8 @@ let _ =
 		[
 			"test_of_file" >:: test_of_file;
 			"test_string_of" >:: test_string_of;
-			"test_get_vendor_name" >:: test_get_vendor_name;
-			"test_get_device_name" >:: test_get_device_name;
+			"test_find_vendor_name" >:: test_find_vendor_name;
+			"test_find_device_name" >:: test_find_device_name;
 		]
 	in
 	run_test_tt ~verbose:true suite
