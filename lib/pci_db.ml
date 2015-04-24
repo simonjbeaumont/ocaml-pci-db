@@ -58,22 +58,17 @@ let get_device_name t v_id d_id =
 let add_subdevice t v_id d_id sv_sd_id sd =
 	let d = get_device t v_id d_id in
 	add_device t v_id d_id { d with subdevices = IdMap.add sv_sd_id sd d.subdevices }
-let get_subdevice t v_id d_id sv_sd_id =
+let get_subdevice t v_id d_id sv_id sd_id =
 	let d = get_device t v_id d_id in
-	IdMap.find sv_sd_id d.subdevices
+	IdMap.(find sd_id (find sv_id d.subdevices))
 let get_subdevice_name t v_id d_id sv_id sd_id =
-	let id = SUBDEVICE_ID (sv_id, sd_id) in
-	let sd = get_subdevice t v_id d_id id in sd.sd_name
+	let sd = get_subdevice t v_id d_id sv_id sd_id in sd.sd_name
 let get_subdevice_names_by_id t v_id d_id sd_id =
 	let d = get_device t v_id d_id in
-	let matching =
-		IdMap.filter (fun key sd ->
-			match key with
-			| SUBDEVICE_ID (_, id) -> id = sd_id
-			| _ -> false
-		) d.subdevices
-	in
-	IdMap.fold (fun key sd names -> sd.sd_name :: names) matching []
+	IdMap.fold (fun sv_id sd_map names ->
+		try IdMap.find sd_id sd_map :: names
+		with Not_found -> names
+	) d.subdevices []
 
 type merge_strategy = Ours | Theirs
 let merge strategy t t' =
@@ -84,30 +79,29 @@ let merge strategy t t' =
 	{ classes = IdMap.merge merge_f t.classes t'.classes;
 	  vendors = IdMap.merge merge_f t.vendors t'.vendors; }
 
-let string_of_definition id name =
-	Printf.sprintf "%s %s\n" (string_of_id id) name
-
 let string_of t =
 	Printf.sprintf "%s%s"
 		(IdMap.fold (fun id c acc ->
 			Printf.sprintf "%s%s%s" acc
-				(string_of_definition id c.c_name)
+				(Printf.sprintf "%02Lx %s\n" id c.c_name)
 				(IdMap.fold (fun id sc acc ->
 					Printf.sprintf "%s%s%s" acc
-					(string_of_definition id sc.sc_name)
+					(Printf.sprintf "%02Lx %s\n" id sc.sc_name)
 					(IdMap.fold (fun id pi acc ->
-						string_of_definition id pi.pi_name
+						Printf.sprintf "%02Lx %s\n" id pi.pi_name
 					) sc.progifs "")
 				) c.subclasses "")
 		) t.classes "")
 		(IdMap.fold (fun id v acc ->
 			Printf.sprintf "%s%s%s" acc
-				(string_of_definition id v.v_name)
+				(Printf.sprintf "%04Lx %s\n" id v.v_name)
 				(IdMap.fold (fun id d acc ->
 					Printf.sprintf "%s%s%s" acc
-					(string_of_definition id d.d_name)
-					(IdMap.fold (fun id sd acc ->
-						string_of_definition id sd.sd_name
+					(Printf.sprintf "%04Lx %s\n" id d.d_name)
+					(IdMap.fold (fun sv_id sd_map acc ->
+						IdMap.fold (fun sd_id sd acc ->
+							Printf.sprintf "%04Lx %04Lx %s\n" sv_id sd_id sd.sd_name
+						) sd_map ""
 					) d.subdevices "")
 				) v.devices "")
 		) t.vendors "")

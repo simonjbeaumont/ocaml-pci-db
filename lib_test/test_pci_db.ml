@@ -1,8 +1,6 @@
 open OUnit
 open Pci_db_types
 
-let skip_test_print = false
-
 (* Utility functions *)
 
 let rec foldi n f acc =
@@ -34,7 +32,7 @@ let test_get_vendor_name _ =
 		List.iter
 			(fun (vendor_id, expected_name) ->
 				assert_equal ~printer:id expected_name
-					(Pci_db.get_vendor_name db (VENDOR_ID vendor_id)))
+					(Pci_db.get_vendor_name db vendor_id))
 			[
 				(1L, "SimpleVendorName1");
 				(2L, "SimpleVendorName2");
@@ -44,12 +42,7 @@ let test_get_vendor_name _ =
 				(6L, "VendorName with punctuation :;<=>?@[\\]^_`{|}~`/");
 			];
 		assert_raises ~msg:"Lookup with non-existent id" Not_found
-			(fun () -> Pci_db.get_vendor_name db (VENDOR_ID 7L));
-		List.iter
-			(fun id ->
-				assert_raises ~msg:"Lookup with wrong id type constructor"
-				Not_found (fun () -> Pci_db.get_vendor_name db id))
-			[ CLASS_ID 1L; SUBCLASS_ID 1L; DEVICE_ID 1L ]
+			(fun () -> Pci_db.get_vendor_name db 7L)
 	)
 
 let test_get_device_name _ =
@@ -57,8 +50,8 @@ let test_get_device_name _ =
 		List.iter
 			(fun (vendor_id, dev_id, expected_name) ->
 				assert_equal ~printer:id expected_name
-					(Pci_db.get_device_name db (VENDOR_ID vendor_id)
-						(DEVICE_ID dev_id)))
+					(Pci_db.get_device_name db vendor_id
+						dev_id))
 			[
 				(2L, 0x1L, "SimpleDeviceName-2-1");
 				(3L, 0x1L, "SimpleDeviceName-3-1");
@@ -67,17 +60,7 @@ let test_get_device_name _ =
 				(5L, 0xaL, "DeviceName with whitespace and hex ID");
 			];
 		assert_raises ~msg:"Lookup with non-existent id" Not_found
-			(fun () -> Pci_db.get_device_name db (VENDOR_ID 2L) (DEVICE_ID 4L));
-		let ids = [ VENDOR_ID 3L; DEVICE_ID 3L; CLASS_ID 3L; SUBCLASS_ID 3L ] in
-		let bad_combos = List.filter
-			(function VENDOR_ID _, DEVICE_ID _ -> false | _ -> true)
-			(all_pairs ids ids [])
-		in
-		List.iter
-			(fun (id, id') ->
-				assert_raises ~msg:"Lookup with wrong id type constructor"
-				Not_found (fun () -> Pci_db.get_device_name db id id'))
-			bad_combos
+			(fun () -> Pci_db.get_device_name db 2L 4L)
 	)
 
 let test_string_of _ =

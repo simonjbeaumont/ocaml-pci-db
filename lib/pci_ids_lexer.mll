@@ -15,24 +15,24 @@ rule token = parse
 	| '\n' { token lexbuf }
 	(* Class definitions *)
 	| "C "(hex as id)"  "(text as name)'\n'
-		{ section := Some `classes; CLASS (CLASS_ID (ioh id), name) }
+		{ section := Some `classes; CLASS (ioh id, name) }
 	(* Vendor definitions *)
 	| (hex as id)"  "(text as name)'\n'
-		{ section := Some `vendors; VENDOR (VENDOR_ID (ioh id), name) }
+		{ section := Some `vendors; VENDOR (ioh id, name) }
 	(* Either device or subclass definitions depending on section *)
 	| '\t'(hex as id)"  "(text as name)'\n'
 		{
 			match !section with
-			| Some `classes -> SUBCLASS (SUBCLASS_ID (ioh id), name)
-			| Some `vendors -> DEVICE (DEVICE_ID (ioh id), name)
+			| Some `classes -> SUBCLASS (ioh id, name)
+			| Some `vendors -> DEVICE (ioh id, name)
 			| None -> failwith "Lex error"
 		}
 	(* Prog-if definitions *)
 	| '\t''\t'(hex as id)"  "(text as name)'\n'
-		{ PROGIF (PROGIF_ID (ioh id), name) }
+		{ PROGIF (ioh id, name) }
 	(* Subdevice definitions *)
 	| '\t''\t'(hex as sv_id)" "(hex as sd_id)"  "(text as name)'\n'
-		{ SUBDEVICE (SUBDEVICE_ID (ioh sv_id, ioh sd_id), name) }
+		{ SUBDEVICE ((ioh sv_id, ioh sd_id), name) }
 	(* End of useful content *)
 	| eof { EOF }
 

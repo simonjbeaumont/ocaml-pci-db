@@ -2,7 +2,8 @@
 open Pci_db_types
 %}
 
-%token <Pci_db_types.id * string> CLASS SUBCLASS PROGIF VENDOR DEVICE SUBDEVICE
+%token <Pci_db_types.id * string> CLASS SUBCLASS PROGIF VENDOR DEVICE
+%token <(Pci_db_types.id * Pci_db_types.id) * string> SUBDEVICE
 %token EOF
 
 %start file
@@ -54,7 +55,12 @@ device:
 	;
 subdevices:
 	| { IdMap.empty }
-	| subdevice subdevices { IdMap.add (fst $1) (snd $1) $2 }
+	| subdevice subdevices {
+		let open IdMap in
+		let sd_map = try find (fst (fst $1)) $2 with Not_found -> empty in
+		let sd_map' = add (snd (fst $1)) (snd $1) sd_map in
+		add (fst (fst $1)) sd_map' $2
+	}
 	;
 subdevice:
 	| SUBDEVICE { (fst $1), { sd_name = (snd $1) } }
